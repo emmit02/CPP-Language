@@ -282,8 +282,10 @@ void update_bsstick(const ParsedData &data) {
 }
 
 void worker_thread() {
-    while (true) {
+    while (true) 
+    {
         ParsedData data;
+        std::cout << &data <<"\n";
 
         {
             std::unique_lock<std::mutex> lock(queueMutex);
@@ -339,9 +341,10 @@ void process_file(const std::string &file_path) {
 }
 
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) 
+{
     if (argc < 2) {
-        std::cerr << "Usage: " << argv[0] << " <file_path>" << std::endl;
+        std::cerr << "Usage: " << argv[0] << "<file_path>" << std::endl;
         return 1;
     }
 

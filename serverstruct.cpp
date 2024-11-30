@@ -27,7 +27,6 @@ int main() {
     int clientAddrSize = sizeof(clientAddr);
     char buffer[MAX_BUFFER_SIZE];
 
-    // Create socket
     serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (serverSocket == INVALID_SOCKET) {
         std::cerr << "Socket creation failed." << std::endl;
@@ -39,7 +38,6 @@ int main() {
     serverAddr.sin_port = htons(PORT);
     serverAddr.sin_addr.s_addr = INADDR_ANY;
 
-    // Bind socket to address
     if (bind(serverSocket, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR) {
         std::cerr << "Bind failed." << std::endl;
         closesocket(serverSocket);
@@ -47,7 +45,6 @@ int main() {
         return -1;
     }
 
-    // Listen for incoming connections
     if (listen(serverSocket, 1) == SOCKET_ERROR) {
         std::cerr << "Listen failed." << std::endl;
         closesocket(serverSocket);
@@ -57,7 +54,6 @@ int main() {
 
     std::cout << "Server is listening on port " << PORT << "..." << std::endl;
 
-    // Accept client connection
     clientSocket = accept(serverSocket, (struct sockaddr *)&clientAddr, &clientAddrSize);
     if (clientSocket == INVALID_SOCKET) {
         std::cerr << "Client connection failed." << std::endl;
@@ -68,7 +64,6 @@ int main() {
 
     std::cout << "Client connected." << std::endl;
 
-    // Read data from result.txt and send it line by line
     std::ifstream file("result.txt");
     if (!file.is_open()) {
         std::cerr << "Failed to open result.txt" << std::endl;
@@ -85,7 +80,6 @@ int main() {
 
     std::cout << "Data sent to client." << std::endl;
 
-    // Close sockets
     file.close();
     closesocket(clientSocket);
     closesocket(serverSocket);
